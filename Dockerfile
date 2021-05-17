@@ -7,14 +7,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY JumgaAPI.csproj ./
+COPY JumgaAPI.sln ./
 RUN dotnet restore "./JumgaAPI.sln" -c Release -o out
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "JumgaAPI.csproj" -c Release -o /app/build
+RUN dotnet build "JumgaAPI.sln" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "JumgaAPI.csproj" -c Release -o /app/publish
+RUN dotnet publish "JumgaAPI.sln" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
